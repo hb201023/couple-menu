@@ -203,7 +203,11 @@ def user_page():
                 if recipe['image'] and os.path.exists(recipe['image']):
                     st.image(recipe['image'], width=300)
                 else:
-                    st.image("images/" + os.path.basename(r["image"]), width=300)
+                    img_path = r["image"] or "https://via.placeholder.com/300"
+                    if img_path.startswith("images/"):
+                        img_path = img_path[7:]          # 去掉前缀
+                    st.image("images/" + img_path, width=300)
+                    ##st.image("images/" + os.path.basename(r["image"]), width=300)
                     #st.image("https://via.placeholder.com/300", width=300)
                 st.write(f"**{recipe['name']}**")
                 st.write(f"💰 ¥{recipe['price']}  （{recipe['category']}）")
@@ -257,6 +261,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
